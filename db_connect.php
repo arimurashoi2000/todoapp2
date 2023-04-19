@@ -7,7 +7,6 @@ class DbConnect {
     private $Dbname = 'todoapp';
     private $Dbconnection;
 
-
     public function __construct() {
         $dbn = 'mysql:dbname='.$this->Dbname.';host='.$this->Dbservername.';charset=utf8';
         try {
