@@ -8,8 +8,8 @@
 </head>
 <body>
 <?php 
-    require_once('db_connect.php');
-    require_once('variable.php');
+    require_once('../controllers/db_connect.php');
+    require_once('../controllers/variable.php');
     $db_connect = new DbConnect();
     $dbh = $db_connect->getDbConnection();
     $sql = 'SELECT * FROM mst_task';
@@ -30,7 +30,7 @@
 ?>
 <h1>TODOLIST</h1>
 <!--新規作成ボタン-->
-<form action="./add/task_add.php" method="post">
+<form action="task_add.php" method="post">
 <input type="submit" value="新規追加">
 </form>
 
@@ -49,7 +49,7 @@
         <?php while($rec = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
             <tr>
                 <td><?php echo $rec['id']; ?></td>
-                <td><a href="./edit/edit.php?id=<?php echo $rec['id']; ?>"><?php echo $rec['title']; ?></a></td>
+                <td><a href="edit.php?id=<?php echo $rec['id']; ?>"><?php echo $rec['title']; ?></a></td>
                 <td><?php echo $rec['content']; ?></td>
                 <td><?php echo $rec['created_at']; ?></td>
                 <td>

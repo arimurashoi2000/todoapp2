@@ -1,6 +1,6 @@
 <?php
-require_once('../variable.php');
-require_once('../db_connect.php');
+require_once('../controllers/variable.php');
+require_once('../controllers/db_connect.php');
 $editId = createInput('editId');
 $editTitle = createInput('title');
 $editContent = createInput('content');
@@ -32,6 +32,6 @@ if ($editTitle != '' && $editContent != '' || mb_strlen($editTitle) < 15) {
     <title>Document</title>
 </head>
 <body>
-    <a href="../todo_main.php">戻る</a>
+    <a href="../views/todo_main.php">戻る</a>
 </body>
 </html>

@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>新しいタスクの追加</h1>
-    <form action="task_add_done.php" method="post">
+    <form action="../controllers/task_add_done.php" method="post">
         <div style="margin: 10px">
             <label for="title">新しいタスク名:</label>
             <input type="text" name="title"> <br>

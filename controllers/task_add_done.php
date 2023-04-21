@@ -1,7 +1,7 @@
 <?php
 
-require_once('../variable.php');
-require_once('../db_connect.php');
+require_once('../controllers/variable.php');
+require_once('../controllers/db_connect.php');
 
 $title = createInput('title');
 $content = createInput('content');
@@ -37,7 +37,7 @@ if ($title != '' || $content != '' || mb_strlen($title) > 15) {
 </head>
 <body>
     <br>
-    <a href="../todo_main.php">戻る</a>
+    <a href="../views/todo_main.php">戻る</a>
     
 </body>
 </html>

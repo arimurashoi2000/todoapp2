@@ -1,6 +1,6 @@
 <?php
-require_once('../variable.php');
-require_once('../db_connect.php');
+require_once('../controllers/variable.php');
+require_once('../controllers/db_connect.php');
 
 $db_connect = new DbConnect();
 $dbh = $db_connect->getDbConnection();
@@ -27,7 +27,7 @@ $editContent = $rec['content'];
 </head>
 <body>
 
-    <form action="edit_done.php" method="post">
+    <form action="../controllers/edit_done.php" method="post">
             <div style="margin: 10px">
                 <label for="title">編集するタスク名:</label>
                 <input type="hidden" name="editId" value="<?php echo $id; ?>"><br>
