@@ -1,22 +1,23 @@
 <?php
 
-require_once('../controllers/variable.php');
-require_once('../controllers/db_connect.php');
+require_once('variable.php');
+require_once('db_connect.php');
+require_once('../models/todomodel.php');
 
 $title = createInput('title');
 $content = createInput('content');
 
+$variable = new Variable();
 
-if ($title != '' || $content != '' || mb_strlen($title) > 15) {
+
+
+if ($variable->check($title, $content)==true) {
     //データベースに接続してinsert文を実行する
     $db_connect = new DbConnect();
     $dbh = $db_connect->getDbConnection();
+    $todoModel = new TodoModel();
 
-    $sql = 'INSERT INTO mst_task(title, content) VALUES (:title, :content)';
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(':title', $title, PDO::PARAM_STR);
-    $stmt->bindParam(':content', $title, PDO::PARAM_STR);
-    $stmt->execute();
+    $todoModel->addTodo($title, $content);
 
     echo $title.'<br>';
     echo $content.'<br>';

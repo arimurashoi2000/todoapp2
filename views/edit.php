@@ -1,20 +1,21 @@
 <?php
 require_once('../controllers/variable.php');
 require_once('../controllers/db_connect.php');
+require_once('../models/todomodel.php');
 
 $db_connect = new DbConnect();
 $dbh = $db_connect->getDbConnection();
-$id = createGet('id');
 
-$sql = 'SELECT title, content FROM mst_task WHERE id = :id';
-$stmt = $dbh->prepare($sql);
-$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-$stmt->execute();
+$todoModel = new TodoModel();
 
-$rec = $stmt->fetch(PDO::FETCH_ASSOC);
-//多分エスケープ処理ができてないから別で必要
-$editTitle = $rec['title'];
-$editContent = $rec['content'];
+
+$variable = new Variable();
+$id = $variable->createGet('id');
+
+$todoModel->get($id);
+$data = $todoModel->get($_GET['id']);
+$editTitle = $data['title'];
+$editContent = $data['content'];
 
 ?>
 <!DOCTYPE html>

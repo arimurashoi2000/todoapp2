@@ -10,23 +10,26 @@
 <?php 
     require_once('../controllers/db_connect.php');
     require_once('../controllers/variable.php');
+    require_once('../models/todomodel.php');
+
     $db_connect = new DbConnect();
     $dbh = $db_connect->getDbConnection();
     $sql = 'SELECT * FROM mst_task';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
 
+    $todoModel = new TodoModel();
+    
     //idが渡された時にはdelete文を実行する
     if(isset($_POST['delete_id'])) {
         $delete_id = $_POST['delete_id'];
-        $delete_sql = 'DELETE FROM mst_task WHERE id = :deleteId';
-        $stmt = $dbh->prepare($delete_sql);
-        $stmt->bindParam(':deleteId', $delete_id, PDO::PARAM_INT);
-        $stmt->execute();
+        $todoModel->deleteTodo($delete_id);
 
         header('Location: todo_main.php');
         exit;
     }
+
+    $tasks = $todoModel->getTask();
 ?>
 <h1>TODOLIST</h1>
 <!--新規作成ボタン-->
@@ -46,22 +49,21 @@
     </tr>
 
         <!-- todoリストから取り出すための$stmt->fetch(PDO::FETCH_ASSOC)が必要 -->
-        <?php while($rec = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
-            <tr>
-                <td><?php echo $rec['id']; ?></td>
-                <td><a href="edit.php?id=<?php echo $rec['id']; ?>"><?php echo $rec['title']; ?></a></td>
-                <td><?php echo $rec['content']; ?></td>
-                <td><?php echo $rec['created_at']; ?></td>
-                <td>
-                    <form action="" method="post">
-                        <input type="hidden" name="delete_id" value="<?php echo $rec['id']; ?>">
-                        <button type="submit" onclick="return confirm('削除してもよろしいですが？')">削除する</button>
-                    </form>
-                </td>
+        <?php foreach ($tasks as $task): ?>
+        <tr>
+            <td><?php echo $task['id']; ?></td>
+            <td><a href="edit.php?id=<?php echo $task['id']; ?>"><?php echo $task['title']; ?></a></td>
+            <td><?php echo $task['content']; ?></td>
+            <td><?php echo $task['created_at']; ?></td>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="delete_id" value="<?php echo $task['id']; ?>">
+                    <button type="submit" onclick="return confirm('削除してもよろしいですが？')">削除する</button>
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>
         
-                
-            </tr>
-        <?php endwhile; ?>
 </table>
 </body>
 </html>

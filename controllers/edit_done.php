@@ -1,25 +1,29 @@
 <?php
 require_once('../controllers/variable.php');
 require_once('../controllers/db_connect.php');
-$editId = createInput('editId');
-$editTitle = createInput('title');
-$editContent = createInput('content');
-//15はマジックナンバーだから時間があったら後で修正
-if ($editTitle != '' && $editContent != '' || mb_strlen($editTitle) < 15) {
+require_once('../models/todomodel.php');
+
+$variable = new Variable();
+
+$editId = $variable->createInput('editId');
+$editTitle = $variable->createInput('title');
+$editContent = $variable->createInput('content');
+
+
+if ($variable->check($editTitle, $editContent)==true) {
     //update構文を使って更新する。
     $db_connect = new DbConnect();
     $dbh = $db_connect->getDbConnection();
 
-    $sql = 'UPDATE mst_task SET title = :title, content = :content WHERE id = :id';
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(':title', $editTitle, PDO::PARAM_STR);
-    $stmt->bindParam(':content', $editContent, PDO::PARAM_STR);
-    $stmt->bindParam(':id', $editId, PDO::PARAM_INT);
+    $todoModel = new TodoModel();
+    $todoModel->updateTodo($editId, $editTitle, $editContent);
+
+    
     echo '編集後のタスク名：　'. $editTitle. '<br>';
     echo '編集後のコンテンツ：　'. $editContent. '<br>';
     echo 'を追加しました<br>';
 } else {
-    echo 'タイトルまたは内容が空白、もしくはタイトル名が１５文字を超えています。';
+    echo 'タイトルまたは内容が空白、もしくはタイトル名が30文字を超えています。';
     echo '<input type=button onclick="history.back()" value="戻る">';
 }
 ?>
