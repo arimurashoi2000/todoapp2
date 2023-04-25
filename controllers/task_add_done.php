@@ -4,10 +4,12 @@ require_once('variable.php');
 require_once('db_connect.php');
 require_once('../models/todomodel.php');
 
-$title = createInput('title');
-$content = createInput('content');
-
 $variable = new Variable();
+
+$title = $variable->createInput('title');
+$content = $variable->createInput('content');
+
+
 
 
 

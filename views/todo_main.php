@@ -58,7 +58,7 @@
             <td>
                 <form action="" method="post">
                     <input type="hidden" name="delete_id" value="<?php echo $task['id']; ?>">
-                    <button type="submit" onclick="return confirm('削除してもよろしいですが？')">削除する</button>
+                    <button type="submit" onclick="return confirm('削除してもよろしいですか？')">削除する</button>
                 </form>
             </td>
         </tr>
